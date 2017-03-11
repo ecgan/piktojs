@@ -3,6 +3,8 @@
     $(document).ready(function () {
         getImages();
 
+        // load the stored html from localStorage 
+        // and inject it into the block div.  
         let html = localStorage.getItem("html");
         if (html != null || html != "") {
             $(".block").html(html);
@@ -12,11 +14,8 @@
 
     function getImages() {
         $.getJSON("/images/", function (data) {
-            let images = $(".images");
-            images.children().remove();
-
             for (let i = 0; i < data.length; i++) {
-                images.append('<li><img src="' + data[i] + '" class="img-rounded" onclick="addImage(this.currentSrc)" /></li>');
+                addThumbnail(data[i]);
             }
         });
     }
@@ -33,7 +32,7 @@
             processData: false,  // tell jQuery not to process the data
             contentType: false,  // tell jQuery not to set contentType
             success: function (data) {
-                getImages();
+                addThumbnail(data.file);
             }
         });
     });
@@ -46,18 +45,30 @@
     });
 
     $("#save").click(function () {
+        // get the html from the block div
+        // and save it into localStorage. 
+        // The html will be loaded when browser does a page refresh.
         let html = $(".block").html();
         localStorage.setItem("html", html);
     });
 })();
 
+let addThumbnail = function (url) {
+    let images = $(".images");
+    images.append('<li><img src="' + url + '" class="img-rounded" onclick="addImage(this.currentSrc)" /></li>');
+};
+
 let addText = function (text) {
     $(".block").append('<div class="item draggable" style="top:2px; left:2px" ><div class="close" onclick="removeItem(this)">X</div><span>' + text + '</span></div>');
+    
+    // use the jquery ui draggable.
     $(".draggable").draggable({ containment: "parent" });
 };
 
 let addImage = function (url) {
     $(".block").append('<div class="item draggable" style="top:2px; left:2px" ><div class="close" onclick="removeItem(this)">X</div><image src="' + url + '"></image></div>');
+    
+    // use the jquery ui draggable.
     $(".draggable").draggable({ containment: "parent" });
 };
 
