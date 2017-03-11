@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Canvas</title>
+  <link rel="stylesheet" type="text/css" href="bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="main.css">
+</head>
+
+<body>
+  <!-- side pane -->
+  <div class="sidepane col-sm-2 col-md-2 col-lg-2">
+    <div class="form">
+      <h3>Form</h3>
+      <input type="file" class="form-control fileInput" placeholder="Upload Your Images" name="upload">
+      <button id="submit" class="btn btn-default">upload</button>
+      <!-- Upload Form here -->
+    </div>
+    <hr />
+    <div class="assets">
+      <h3>Assets</h3>
+      <div class="text">
+        <h4>Text</h4>
+        <button id="addText" class="btn btn-default">Add Text</button>
+      </div>
+      <div class="image">
+        <h4>Images</h4>
+        <ul class="list-unstyled images">
+          <!-- List of images here -->
+          <!-- <li><img src="images/sample.jpeg" class="img-rounded" /></li> -->
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- canvas -->
+  <div class="canvas col-sm-8 col-md-8 col-lg-8">
+    <div class="block">
+      <!-- Add images and texts to here -->
+    </div>
+  </div>
+  <script src="./js/jquery-3.1.1.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="./js/app.js"></script>
+  <script>
+    (function () {
+
+      $(document).ready(function () {
+        getImages();
+      });
+
+      function getImages() {
+        $.getJSON("/images/", function (data) {
+          let images = $(".images");
+          images.children().remove();
+
+          for (let i = 0; i < data.length; i++) {
+            images.append('<li><img src="' + data[i] + '" class="img-rounded" onclick="addImage(this.currentSrc)" /></li>');
+          }
+        });
+      }
+
+      $("#submit").click(function () {
+        let file = $(".fileInput")[0].files[0];
+        let formData = new FormData();
+        formData.append('upload', file);
+
+        $.ajax({
+          url: '/uploads',
+          type: 'POST',
+          data: formData,
+          processData: false,  // tell jQuery not to process the data
+          contentType: false,  // tell jQuery not to set contentType
+          success: function (data) {
+            getImages();
+          }
+        });
+      });
+
+      $("#addText").click(function () {
+        let text = prompt("Enter your text");
+        if (text != null) {
+          addText(text);
+        }
+      });
+    })();
+
+    let addText = function (text) {
+      $(".block").append('<div class="item draggable" style="top:2px; left:2px" ><div class="close" onclick="removeItem(this)">X</div><span>' + text + '</span></div>');
+      $(".draggable").draggable({ containment: "parent" });
+    };
+
+    let addImage = function (url) {
+      $(".block").append('<div class="item draggable" style="top:2px; left:2px" ><div class="close" onclick="removeItem(this)">X</div><image src="' + url + '"></image></div>');
+      $(".draggable").draggable({ containment: "parent" });
+    };
+
+    let removeItem = function (obj) {
+      $(obj).parent().remove();
+    };
+  </script>
+</body>
+
+</html>

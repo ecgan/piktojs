@@ -57,3 +57,30 @@ html, body {
 .item.selected {
   border-color: blue;
 }
+
+/* additional CSS */
+.canvas .block .item {
+  position: absolute;
+  border: transparent 2px dashed;
+  user-select : none;
+}
+
+.canvas .block .item:hover {
+  border: gray 2px dashed;
+  cursor: move;
+}
+
+.canvas .block .item .close {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  display: none;
+}
+
+.canvas .block .item:hover .close {
+  display: block;
+}
+
+.canvas .block .item .close:hover {
+  cursor: pointer;
+}
