@@ -16,13 +16,13 @@
 
 * jQuery 3.1.1, minified version, loaded from CDN, HTTP/HTTPS agnostic. 
 * jQuery UI 1.12.1, minified version, loaded from CDN, HTTP/HTTPS agnostic.
-** This is used for the [Draggable](https://jqueryui.com/draggable/#constrain-movement) functionality only.
+ * This is used for the [Draggable](https://jqueryui.com/draggable/#constrain-movement) functionality only.
 * localStorage to allow the user to save the canvas and reload the canvas upon browser refresh. 
 
 ### Future enhancements
 
 * Use cycle.js (a functional and reactive JavaScript framework ) to better separate the application logic and external world effects (e.g. views, user interactions, DOM events, HTTP requests etc).
-** I tried but couldn't make cycle.js work with the app the way I want it to. Time is limited, therefore I had to fallback and use the jQuery library that I'm more familiar with. 
+ * I tried but couldn't make cycle.js work with the app the way I want it to. Time is limited, therefore I had to fallback and use the jQuery library that I'm more familiar with. 
 
 ------------------------------------------------------------------------------------------------------
 
