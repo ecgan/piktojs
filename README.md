@@ -1,3 +1,31 @@
+## Note
+
+### How it works
+
+1. When the page is loaded:
+ * the app will request for the list of images by calling `GET /images/`, and populate them as thumbnails in the side nav list.  
+ * the app will check localStorage whether there is any saved canvas. If yes, load it into the canvas. 
+2. Upload an image by selecting an image file and click the Upload button. The image will then be available at the `/images/` endpoint and will be added into the thumbnail list.
+3. Click the Add Text button and there will be a prompt for you to key in your text. The text will then be placed on the canvas at the top left corner. You can add multiple texts on the canvas. 
+4. Click on a thumbnail to insert the image onto the canvas. You can add multiple images.
+5. The texts and images can be re-positioned by dragging around inside the canvas.
+6. The texts and images can be removed from the canvas. To do that, hover your mouse over the item. The item will have a gray, dashed line border around it, and an X button at the top left corner. Click the X button to remove the item. 
+7. To save your canvas, click the Save button in the side nav. Your canvas will automatically be loaded when you reload your browser. 
+
+### Tech used
+
+* jQuery 3.1.1, minified version, loaded from CDN, HTTP/HTTPS agnostic. 
+* jQuery UI 1.12.1, minified version, loaded from CDN, HTTP/HTTPS agnostic.
+** This is used for the [Draggable](https://jqueryui.com/draggable/#constrain-movement) functionality only.
+* localStorage to allow the user to save the canvas and reload the canvas upon browser refresh. 
+
+### Future enhancements
+
+* Use cycle.js (a functional and reactive JavaScript framework ) to better separate the application logic and external world effects (e.g. views, user interactions, DOM events, HTTP requests etc).
+** I tried but couldn't make cycle.js work with the app the way I want it to. Time is limited, therefore I had to fallback and use the jQuery library that I'm more familiar with. 
+
+------------------------------------------------------------------------------------------------------
+
 ## Instructions
 
 You are required to implement a single page application that allows user to add text and image into canvas.
